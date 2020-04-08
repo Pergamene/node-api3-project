@@ -1,12 +1,16 @@
 const express = require('express');
 
+const db = require('./userDb');
+
 const router = express.Router();
 
-router.post('/', (req, res) => {
+router.use('/:id', validateUserId);
+
+router.post('/', validateUser, (req, res) => {
   // do your magic!
 });
 
-router.post('/:id/posts', (req, res) => {
+router.post('/:id/posts', validatePost, (req, res) => {
   // do your magic!
 });
 
@@ -44,7 +48,16 @@ router.put('/:id', (req, res) => {
  *    return { message: 'invalid user id' }
  */
 function validateUserId(req, res, next) {
-  // do your magic!
+  db.getById(req.params.id)
+    .then(user => {
+      if (user.length) {
+        req.user(user);
+      } else {
+        res.status(400).json({ message: 'invalid user id' });
+      }
+    })
+
+  next();
 }
 
 /**
@@ -61,7 +74,14 @@ function validateUserId(req, res, next) {
  *    return { message: 'missing required name field' }
  */
 function validateUser(req, res, next) {
-  // do your magic!
+  const body = req.body;
+  if (!body) {
+    res.status(400).json({ message: 'missing user data' });
+  } else if (!body.name) {
+    res.status(400).json({ message: 'missing required name field' });
+  }
+
+  next();
 }
 
 /**
@@ -78,7 +98,14 @@ function validateUser(req, res, next) {
  *    return { message: 'missing required text field' }
  */
 function validatePost(req, res, next) {
-  // do your magic!
+  const body = req.body;
+  if (!body) {
+    res.status(400).json({ message: 'missing post data' });
+  } else if (!body.text) {
+    res.status(400).json({ message: 'missing required text field' });
+  }
+
+  next();
 }
 
 module.exports = router;
