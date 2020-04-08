@@ -1,6 +1,6 @@
 const express = require('express');
 
-const Logger = require('./logger/Logger');
+const logger = require('./logger/Logger');
 
 const userRouter = require('./users/userRouter');
 const postRouter = require('./posts/postRouter');
@@ -8,7 +8,7 @@ const postRouter = require('./posts/postRouter');
 const server = express();
 
 server.use(express.json());
-server.use(Logger.logger);
+server.use(logger);
 
 server.use('/api/user', userRouter);
 server.use('/api/post', postRouter);

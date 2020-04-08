@@ -39,7 +39,7 @@ function validatePostId(req, res, next) {
   db.getById(req.params.id)
     .then(post => {
       if (post.length) {
-        req.post(post);
+        req.post = post;
       } else {
         res.status(400).json({ message: 'invalid post id' });
       }
