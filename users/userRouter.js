@@ -38,7 +38,6 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-  console.log('REQ.USER',req.user);
   if (req.user) {
     res.status(200).json(req.user);
   } else {
@@ -71,7 +70,6 @@ router.delete('/:id', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
-  console.log("USER", req.user);
   const id = req.user.id;
   db.update(id, req.body)
     .then(count => {
