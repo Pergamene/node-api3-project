@@ -137,9 +137,9 @@ function validateUser(req, res, next) {
     res.status(400).json({ message: 'missing user data' });
   } else if (!body.name) {
     res.status(400).json({ message: 'missing required name field' });
+  } else {
+    next();
   }
-
-  next();
 }
 
 /**
@@ -161,9 +161,9 @@ function validatePost(req, res, next) {
     res.status(400).json({ message: 'missing post data' });
   } else if (!body.text) {
     res.status(400).json({ message: 'missing required text field' });
+  } else {
+    next();
   }
-
-  next();
 }
 
 module.exports = router;
