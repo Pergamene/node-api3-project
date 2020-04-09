@@ -17,6 +17,12 @@ server.get('/', (req, res) => {
 
 //custom middleware
 
+/**
+ * logs to the console the following information about each request:
+ *    request method
+ *    request url
+ *    request timestamp
+ */
 function logger(req, res, next) {
   console.log(`\n=== LOG ===\nRequest method: ${req.method}\nRequest URL: ${req.originalUrl}\nTimestamp: ${new Date()}\n`);
 
