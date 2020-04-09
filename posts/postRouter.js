@@ -7,11 +7,17 @@ const router = express.Router();
 router.use('/:id', validatePostId);
 
 router.get('/', (req, res) => {
-  // do your magic!
+  db.get()
+    .then(posts => {
+      res.status(200).json(posts);
+    })
+    .catch(() => {
+      res.status(500).json({ error: 'There was a problem getting the posts.' });
+    });
 });
 
 router.get('/:id', (req, res) => {
-  // do your magic!
+  
 });
 
 router.delete('/:id', (req, res) => {
@@ -38,6 +44,7 @@ router.put('/:id', (req, res) => {
 function validatePostId(req, res, next) {
   db.getById(req.params.id)
     .then(post => {
+      console.log('POST', post);
       if (post.length) {
         req.post = post;
       } else {
